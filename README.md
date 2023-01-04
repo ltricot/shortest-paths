@@ -10,6 +10,8 @@ Shortest path algorithms are quite rich. Everybody knows Dijkstra and Bellman-Fo
 - The network simplex takes a relatively simple form when used to solve shortest path problems
 
 Some things to work on:
+- [ ] More abstract graph interface without sacrificing performance: notably `g.fw` should be `fw(g)`. This would notably allow for lazy graphs, which will eventually come in handy.
+- [ ] Two-level, multilevel, and HOT-Queues Dijkstra implementations (these are all monotonic priority queue structures)
 - [ ] Speed up the network simplex algorithm by using more appropriate data structures. Currently, updating prices is $O(N)$ and pivoting is $O(d)$ (degree)
 - [ ] Speed up the auction algorithm (several papers give simple ideas to do so)
 - [ ] Explore parallelism
