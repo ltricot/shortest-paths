@@ -11,10 +11,11 @@ Shortest path algorithms are quite rich. Everybody knows Dijkstra and Bellman-Fo
 
 Some things to work on:
 - [ ] More abstract graph interface without sacrificing performance: notably `g.fw` should be `fw(g)`. This would notably allow for lazy graphs, which will eventually come in handy.
+- [ ] Implement random graph generators for a variety of "families" to test how robust the various algorithms are.
 - [ ] Two-level, multilevel, and HOT-Queues Dijkstra implementations (these are all monotonic priority queue structures)
 - [ ] Speed up the network simplex algorithm by using more appropriate data structures. Currently, updating prices is $O(N)$ and pivoting is $O(d)$ (degree)
 - [ ] Speed up the auction algorithm (several papers give simple ideas to do so)
-- [ ] Explore parallelism
+- [ ] Explore parallelism: Bertsekas claims the auction algorithm greatly benefits.
 - [ ] Implement the [Landmarks](https://www.cs.princeton.edu/courses/archive/spr06/cos423/Handouts/GH05.pdf) idea introduced by Goldberg & Harrelson.
 - [ ] Perhaps the idea above can be used as a warm start for the Auction algorithm: the latter is a form of dual ascent algorithm which would benefit from approximate, feasible starting prices.
 - [ ] Implement other label setting algorithms like D'Esopo-Pape
