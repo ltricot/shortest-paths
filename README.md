@@ -4,7 +4,7 @@
 
 Shortest path algorithms are quite rich. Everybody knows Dijkstra and Bellman-Ford, but they are not the end of the story:
 - Dijkstra is part of the collection of _label setting_ algorithms and Bellman-Ford is part of the collection of _label correcting_ algorithms
-- Dijkstra implementations have seen a lot of research: Dijkstra with a Heap is $O(N log N + E)$ but better complexities and more performant implementations can be obtained by working with other priority queue data structures
+- Dijkstra implementations have seen a lot of research: Dijkstra with a Heap is $O(N \log N + E)$ but better complexities and more performant implementations can be obtained by working with other priority queue data structures
 - Bidirectional label setting is a simple idea which yields a good performance improvement
 - Bertsekas introduced an auction algorithm for the shortest path which does not fit into the usual categories of shortest path algorithms
 - The network simplex takes a relatively simple form when used to solve shortest path problems
