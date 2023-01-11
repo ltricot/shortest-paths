@@ -12,12 +12,12 @@ struct LabelSettingBidiBuckets <: BucketsAlgorithm end
 
 
 function _label_setting_generic(g::Graph{W}, s::Node, S::H) where {W,H<:PriorityQueue}
-    L = fill(typemax(W), length(g.fw))
-    P = fill(zero(Node), length(g.fw))
+    L = fill(typemax(W), length(fw(g)))
+    P = fill(zero(Node), length(fw(g)))
     seen = 0
 
     enqueue!(S, zero(W), (zero(W), s, s))
-    while !isempty(S) && seen < length(g.fw)
+    while !isempty(S) && seen < length(fw(g))
         cost, node, pred = dequeue!(S)
         if L[node] <= cost
             continue
@@ -27,7 +27,7 @@ function _label_setting_generic(g::Graph{W}, s::Node, S::H) where {W,H<:Priority
         P[node] = pred
         L[node] = cost
 
-        for (adjacent, weight) in g.fw[node]
+        for (adjacent, weight) in fw(g)[node]
             if L[adjacent] > cost + weight
                 enqueue!(S, cost + weight, (cost + weight, adjacent, node))
             end
@@ -38,8 +38,8 @@ function _label_setting_generic(g::Graph{W}, s::Node, S::H) where {W,H<:Priority
 end
 
 function _label_setting_generic(g::Graph{W}, s::Node, t::Node, S::H) where {W,H<:PriorityQueue}
-    L = fill(typemax(W), length(g.fw))
-    P = fill(zero(Node), length(g.fw))
+    L = fill(typemax(W), length(fw(g)))
+    P = fill(zero(Node), length(fw(g)))
 
     enqueue!(S, zero(W), (zero(W), s, s))
     while !isempty(S)
@@ -54,7 +54,7 @@ function _label_setting_generic(g::Graph{W}, s::Node, t::Node, S::H) where {W,H<
         if node == t
             break
         else
-            for (adjacent, weight) in g.fw[node]
+            for (adjacent, weight) in fw(g)[node]
                 if L[adjacent] > cost + weight
                     enqueue!(S, cost + weight, (cost + weight, adjacent, node))
                 end
@@ -96,10 +96,10 @@ function sp(::Type{LabelSettingBuckets}, u::W, g::Graph{W}, s::Node, t::Node) wh
 end
 
 function _bidirectional_label_setting_generic(g::Graph{W}, s::Node, t::Node, SF::H, SB::H) where {W,H<:PriorityQueue}
-    LF = fill(typemax(W), length(g.fw))
-    LB = fill(typemax(W), length(g.fw))
-    PF = fill(zero(Node) - 1, length(g.fw))
-    PB = fill(zero(Node) - 1, length(g.fw))
+    LF = fill(typemax(W), length(fw(g)))
+    LB = fill(typemax(W), length(fw(g)))
+    PF = fill(zero(Node) - 1, length(fw(g)))
+    PB = fill(zero(Node) - 1, length(fw(g)))
 
     enqueue!(SF, zero(W), (zero(W), s, s))
     enqueue!(SB, zero(W), (zero(W), t, t))
@@ -114,7 +114,7 @@ function _bidirectional_label_setting_generic(g::Graph{W}, s::Node, t::Node, SF:
             LF[nodeF] = costF
             PF[nodeF] = predF
 
-            for (adjacent, weight) in g.fw[nodeF]
+            for (adjacent, weight) in fw(g)[nodeF]
                 if LF[adjacent] > costF + weight
                     enqueue!(SF, costF + weight, (costF + weight, adjacent, nodeF))
                     if LB[adjacent] < typemax(W) && costF + LB[adjacent] + weight < beta
@@ -129,7 +129,7 @@ function _bidirectional_label_setting_generic(g::Graph{W}, s::Node, t::Node, SF:
             LB[nodeB] = costB
             PB[nodeB] = predB
 
-            for (adjacent, weight) in g.bw[nodeB]
+            for (adjacent, weight) in bw(g)[nodeB]
                 if LB[adjacent] > costB + weight
                     enqueue!(SB, costB + weight, (costB + weight, adjacent, nodeB))
                     if LF[adjacent] < typemax(W) && costB + LF[adjacent] + weight < beta

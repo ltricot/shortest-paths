@@ -7,7 +7,7 @@ include("auction.jl")
 include("simplex.jl")
 include("randomgraphs.jl")
 
-export Graph, Node
+export Graph, AdjListGraph, Node, fw, bw
 export presort!
 export ShortestPathAlgorithm,
     BucketsAlgorithm,
