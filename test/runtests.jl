@@ -27,7 +27,7 @@ function grid(n::Int, u::Int)
         push!(fw, adj)
     end
 
-    Graph(fw)
+    AdjListGraph(fw)
 end
 
 function path(P::Vector{Node}, s::Node, t::Node)
@@ -42,7 +42,7 @@ end
 function pcost(g::Graph{W}, path::Vector{Node}) where {W}
     c = zero(W)
     for (u, v) in zip(path[1:end-1], path[2:end])
-        c += g.fw[u][findfirst(x -> x[1] == v, g.fw[u])][2]
+        c += fw(g)[u][findfirst(x -> x[1] == v, fw(g)[u])][2]
     end
     c
 end

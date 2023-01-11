@@ -5,17 +5,17 @@ struct Auction <: ShortestPathAlgorithm end
 
 
 function presort!(g::Graph)
-    for adj in Iterators.flatten((g.fw, g.bw))
+    for adj in Iterators.flatten((fw(g), bw(g)))
         sort!(adj, by=t -> t[2])
     end
 end
 
 function _auction(g::Graph{W}, s::Node, t::Node) where {W<:Integer}
     path = [s]
-    prices = [zero(W) for _ in g.fw]
+    prices = [zero(W) for _ in fw(g)]
 
     while (i = path[end]) != t
-        (lb, j), _ = findmin(g.fw[i]) do (j, w)
+        (lb, j), _ = findmin(fw(g)[i]) do (j, w)
             (w + prices[j], j)
         end
 

@@ -2,26 +2,26 @@ struct Simplex <: ShortestPathAlgorithm end
 
 
 function _bfs(g::Graph{W}, s::Node) where {W<:Number}
-    prices = fill(zero(W), length(g.fw))
-    fw = [Vector{Tuple{Node,W}}() for _ in g.fw]
+    prices = fill(zero(W), length(fw(g)))
+    _fw = [Vector{Tuple{Node,W}}() for _ in fw(g)]
 
-    seen = falses(length(g.fw))
+    seen = falses(length(fw(g)))
     seen[s] = true
 
     queue = [(s, 0)]
     while !isempty(queue)
         u, c = popfirst!(queue)
         prices[u] = c
-        for (v, w) in g.fw[u]
+        for (v, w) in fw(g)[u]
             if !seen[v]
                 seen[v] = true
-                push!(fw[u], (v, w))
+                push!(_fw[u], (v, w))
                 push!(queue, (v, c + w))
             end
         end
     end
 
-    Graph(fw), prices
+    AdjListGraph(_fw), prices
 end
 
 function _update_prices(T::Graph, prices, u, v, w)
@@ -49,7 +49,7 @@ function _simplex(g::Graph{W}, s::Node) where {W}
 
     while true
         pivoted = false
-        for u in eachindex(g.fw), (v, w) in g.fw[u]
+        for u in eachindex(fw(g)), (v, w) in fw(g)[u]
             if w - prices[v] + prices[u] < 0
                 _pivot(T, prices, u, v, w)
                 pivoted = true
@@ -67,7 +67,7 @@ end
 function sp(::Type{Simplex}, g::Graph{W}, s::Node) where {W<:Number}
     T, _ = _simplex(g, s)
 
-    P = fill(zero(Node), length(g.fw))
+    P = fill(zero(Node), length(fw(g)))
     for (v, bw) in enumerate(T.bw)
         if length(bw) > 0
             u, _ = bw[1]

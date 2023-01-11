@@ -10,7 +10,7 @@ Shortest path algorithms are quite rich. Everybody knows Dijkstra and Bellman-Fo
 - The network simplex takes a relatively simple form when used to solve shortest path problems
 
 Some things to work on:
-- [ ] More abstract graph interface without sacrificing performance: notably `g.fw` should be `fw(g)`. This would notably allow for lazy graphs, which will eventually come in handy.
+- [x] More abstract graph interface without sacrificing performance: notably `g.fw` should be `fw(g)`. This would notably allow for lazy graphs, which will eventually come in handy.
 - [ ] Implement random graph generators for a variety of "families" to test how robust the various algorithms are.
 - [ ] Two-level, multilevel, and HOT-Queues Dijkstra implementations (these are all monotonic priority queue structures)
 - [ ] Speed up the network simplex algorithm by using more appropriate data structures. Currently, updating prices is $O(N)$ and pivoting is $O(d)$ (degree)
@@ -20,8 +20,10 @@ Some things to work on:
 - [ ] Perhaps the idea above can be used as a warm start for the Auction algorithm: the latter is a form of dual ascent algorithm which would benefit from approximate, feasible starting prices.
 - [ ] Implement other label setting algorithms like D'Esopo-Pape
 - [ ] Implement the primal-dual shortest path algorithm based on the cut formulation for the shortest path problem
+- [ ] Implement the primal-dual shortest path algorithm based on the min cost flow formulation
 - [ ] Use the simplex algorithm to enumerate shortest paths in order of increasing lengths: this is running a shortest path algo on the graph of extremal points of the shortest path polyhedron ! I believe this has never been done before
 - [ ] Implement a scaling algorithm (FPTA) to solve the constrained shortest path as a shortest path problem an an auxiliary graph (details to come)
+- [ ] Implement Glover's threshold algorithm, and his [PSP algorithm](https://www-jstor-org.libproxy.mit.edu/stable/170867#metadata_info_tab_contents)
 
 ## Running the tests
 
